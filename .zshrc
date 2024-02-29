@@ -17,7 +17,20 @@ exists() {
 
 
 # Plugins
-source ~/.zsh_plugins/fzf-tab/fzf-tab.plugin.zsh
+if exists fzf
+then
+    source ~/.zsh_plugins/fzf-tab/fzf-tab.plugin.zsh
+    # disable sort when completing `git checkout`
+    zstyle ':completion:*:git-checkout:*' sort false
+    # set descriptions format to enable group support
+    zstyle ':completion:*:descriptions' format '[%d]'
+    # set list-colors to enable filename colorizing
+    zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+    # preview directory's content with eza when completing cd
+    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+    # switch group using `,` and `.`
+    zstyle ':fzf-tab:*' switch-group ',' '.'
+fi
 source ~/.zsh_plugins/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.zsh_plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -36,17 +49,6 @@ bindkey -M vicmd 'j' history-substring-search-down
 # Autosuggestions
 bindkey '^l' autosuggest-accept
 
-# fzf-tab
-# disable sort when completing `git checkout`
-zstyle ':completion:*:git-checkout:*' sort false
-# set descriptions format to enable group support
-zstyle ':completion:*:descriptions' format '[%d]'
-# set list-colors to enable filename colorizing
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-# preview directory's content with eza when completing cd
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-# switch group using `,` and `.`
-zstyle ':fzf-tab:*' switch-group ',' '.'
 
 # Aliases
 # Commands
@@ -99,4 +101,7 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
-eval "$(zoxide init --cmd cd zsh)"
+if exists zoxide
+then
+    eval "$(zoxide init --cmd cd zsh)"
+fi
