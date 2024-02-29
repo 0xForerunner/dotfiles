@@ -74,9 +74,12 @@ alias gco='git checkout'
 alias ga='git add'
 
 # Misc
+alias vi='nvim'
 alias del-targets='find . -type d -name target -prune -exec rm -rf {} \;'
 alias signup-logs="kubectl --namespace signup-sequencer-orb-ethereum logs -f --tail=50 signup-sequencer-orb-ethereum-0 | jq 'select( .level != \"TRACE\" )'"
 
+
+if [[ $OSTYPE == darwin* ]]; then
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/opt/homebrew/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -91,6 +94,7 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
