@@ -5,6 +5,17 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# function to see if command exists
+exists() {
+    if ! command -v -- "$1" > /dev/null 2>&1;
+    then
+        return 1
+    else 
+        return 0
+    fi
+}
+
+
 # Plugins
 source ~/.zsh_plugins/fzf-tab/fzf-tab.plugin.zsh
 source ~/.zsh_plugins/powerlevel10k/powerlevel10k.zsh-theme
@@ -39,10 +50,19 @@ zstyle ':fzf-tab:*' switch-group ',' '.'
 
 # Aliases
 # Commands
+if exists eza
+then
+    alias ls='eza'
+    alias ll='eza -lh'
+else
+    alias ll='ls -lh'
+fi
+if exists bat
+then
+    alias cat='bat'
+fi
+
 alias n='nept'
-alias ls='eza'
-alias ll='eza -l'
-alias cat='bat'
 alias k='kubectl'
 
 # Git
