@@ -1,0 +1,36 @@
+[user]
+	name = Eric Woolsey
+	email = ewoolsey@ualberta.ca
+	signingkey = .ssh/signing-ed25519
+[difftool]
+	prompt = true
+[diff]
+	tool = nvimdiff
+	submodule = log
+[difftool "nvimdiff"]
+	cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+[merge]
+	tool = nvim
+[mergetool "nvim"]
+	cmd = "nvim -f -c \"Gdiffsplit!\" \"$MERGED\""
+[mergetool]
+	prompt = false
+
+[credentail]
+	useHttpPath = true
+[credential]
+	helper = osxkeychain
+[submodule]
+	recurse = true
+[pull]
+	rebase = true
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpg
+[alias]
+	open = "!f(){ open `git remote -v | awk '/fetch/{print $2}' | sed -Ee 's#(git@|git://)#http://#' -e 's@com:@com/@'`| head -n1; }; f"
