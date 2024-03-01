@@ -1,3 +1,5 @@
+# Launch tmux if not already running
+if [ "$TMUX" = "" ]; then tmux; fi
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -49,13 +51,13 @@ bindkey -M vicmd 'j' history-substring-search-down
 # Autosuggestions
 bindkey '^l' autosuggest-accept
 
-
 # Aliases
 # Commands
 if exists eza
 then
+    alias ll="eza -lh --icons --git -a"
+    alias lt="eza --tree --level=2 --long --icons --git"
     alias ls='eza'
-    alias ll='eza -lh'
 else
     alias ll='ls -lh'
 fi
