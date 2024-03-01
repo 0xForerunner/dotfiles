@@ -8,7 +8,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # History
-HISTFILE="~/.zsh_history"
+HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000000
 SAVEHIST=10000000
 setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
