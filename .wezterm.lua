@@ -14,6 +14,7 @@ config.enable_tab_bar = false
 config.leader = { key = "a", mods = "CTRL" }
 -- config.default_pro = { "/opt/homebrew/bin/nu" }
 config.keys = {
+	-- tmux bindings
 	{ key = "a", mods = "LEADER|CTRL",  action = wezterm.action({ SendString = "\x01" }) },
 	{
 		key = "-",
