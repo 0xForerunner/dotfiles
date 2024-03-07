@@ -1,5 +1,7 @@
 # Launch tmux if not already running
-if [ "$TMUX" = "" ]; then tmux; fi
+# Launch tmux if not already running
+# if [ "$TMUX" = "" ]; then tmux; fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -25,6 +27,14 @@ exists() {
     else 
         return 0
     fi
+}
+
+
+# function to see if command exists
+store() {
+    injectived tx wasm store --from inj17vytdwqczqz72j65saukplrktd4gyfme5agf6c $1 --generate-only > tmp.json && \
+    injectived tx authz exec tmp.json --from mainnet_store_code --node https://sentry.tm.injective.network:443 --gas 6000000 --fees 3200000000000000inj
+    rm tmp.json
 }
 
 
@@ -91,7 +101,6 @@ alias ga='git add'
 alias vi='nvim'
 alias del-targets='find . -type d -name target -prune -exec rm -rf {} \;'
 alias signup-logs="kubectl --namespace signup-sequencer-orb-ethereum logs -f --tail=50 signup-sequencer-orb-ethereum-0 | jq 'select( .level != \"TRACE\" )'"
-
 
 if [[ $OSTYPE == darwin* ]]; then
 # >>> conda initialize >>>
