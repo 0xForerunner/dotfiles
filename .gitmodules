@@ -13,9 +13,6 @@
 [submodule "zsh_plugins/fzf-tab"]
 	path = .zsh_plugins/fzf-tab
 	url = https://github.com/Aloxaf/fzf-tab.git
-[submodule ".config/nvim"]
-	path = .config/nvim
-	url = https://github.com/AstroNvim/AstroNvim
 [submodule "zsh_plugins/zsh-history-substring-search"]
 	path = .zsh_plugins/zsh-history-substring-search
 	url = https://github.com/zsh-users/zsh-history-substring-search.git
