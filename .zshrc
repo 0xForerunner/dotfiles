@@ -69,7 +69,7 @@ bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
 # Autosuggestions
-bindkey '^l' autosuggest-accept
+bindkey '^ ' autosuggest-accept
 
 # Aliases
 # Commands
@@ -126,3 +126,13 @@ if exists zoxide
 then
     eval "$(zoxide init --cmd cd zsh)"
 fi
+
+# pnpm
+export PNPM_HOME="/Users/ewoolsey/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+eval "$(direnv hook zsh)"
