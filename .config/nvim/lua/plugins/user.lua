@@ -6,12 +6,12 @@ return {
 
   -- == Examples of Adding Plugins ==
 
-  "andweeb/presence.nvim",
-  {
-    "ray-x/lsp_signature.nvim",
-    event = "BufRead",
-    config = function() require("lsp_signature").setup() end,
-  },
+  -- "andweeb/presence.nvim",
+  -- {
+  --   "ray-x/lsp_signature.nvim",
+  --   event = "BufRead",
+  --   config = function() require("lsp_signature").setup() end,
+  -- },
 
   -- == Examples of Overriding Plugins ==
 
@@ -38,13 +38,13 @@ return {
   },
 
   -- You can disable default plugins as follows:
-  { "max397574/better-escape.nvim", enabled = false },
+  { "max397574/better-escape.nvim", enabled = true },
 
   -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
   {
     "L3MON4D3/LuaSnip",
     config = function(plugin, opts)
-      require "astronvim.plugins.configs.luasnip" (plugin, opts) -- include the default astronvim config that calls the setup call
+      require "astronvim.plugins.configs.luasnip"(plugin, opts) -- include the default astronvim config that calls the setup call
       -- add more custom luasnip configuration such as filetype extend or custom snippets
       local luasnip = require "luasnip"
       luasnip.filetype_extend("javascript", { "javascriptreact" })
@@ -54,7 +54,7 @@ return {
   {
     "windwp/nvim-autopairs",
     config = function(plugin, opts)
-      require "astronvim.plugins.configs.nvim-autopairs" (plugin, opts) -- include the default astronvim config that calls the setup call
+      require "astronvim.plugins.configs.nvim-autopairs"(plugin, opts) -- include the default astronvim config that calls the setup call
       -- add more custom autopairs configuration such as custom rules
       local npairs = require "nvim-autopairs"
       local Rule = require "nvim-autopairs.rule"
@@ -62,18 +62,18 @@ return {
       npairs.add_rules(
         {
           Rule("$", "$", { "tex", "latex" })
-          -- don't add a pair if the next character is %
-              :with_pair(cond.not_after_regex "%%")
-          -- don't add a pair if  the previous character is xxx
-              :with_pair(
-                cond.not_before_regex("xxx", 3)
-              )
-          -- don't move right when repeat character
-              :with_move(cond.none())
-          -- don't delete if the next character is xx
-              :with_del(cond.not_after_regex "xx")
-          -- disable adding a newline when you press <cr>
-              :with_cr(cond.none()),
+            -- don't add a pair if the next character is %
+            :with_pair(cond.not_after_regex "%%")
+            -- don't add a pair if  the previous character is xxx
+            :with_pair(
+              cond.not_before_regex("xxx", 3)
+            )
+            -- don't move right when repeat character
+            :with_move(cond.none())
+            -- don't delete if the next character is xx
+            :with_del(cond.not_after_regex "xx")
+            -- disable adding a newline when you press <cr>
+            :with_cr(cond.none()),
         },
         -- disable for .vim files, but it work for another filetypes
         Rule("a", "a", "-vim")
@@ -81,74 +81,32 @@ return {
     end,
   },
 
-  -- You can also add new plugins here as well:
-  -- Add plugins, the lazy syntax
-  -- "andweeb/presence.nvim",
   -- {
-  --   "ray-x/lsp_signature.nvim",
-  --   event = "BufRead",
+  --   "andythigpen/nvim-coverage",
+  --   lazy = false,
+  --   requires = "nvim-lua/plenary.nvim",
   --   config = function()
-  --     require("lsp_signature").setup()
+  --     require("coverage").setup {
+  --       commands = true, -- create commands
+  --       highlights = {
+  --         -- customize highlight groups created by the plugin
+  --         covered = { fg = "#75e36b" }, -- supports style, fg, bg, sp (see :h highlight-gui)
+  --         uncovered = { fg = "#F07178" },
+  --       },
+  --       signs = {
+  --         -- use your own highlight groups or text markers
+  --         covered = { hl = "CoverageCovered", text = "▎" },
+  --         uncovered = { hl = "CoverageUncovered", text = "▎" },
+  --       },
+  --       summary = {
+  --         -- customize the summary pop-up
+  --         min_coverage = 80.0, -- minimum coverage threshold (used for highlighting)
+  --       },
+  --       lang = {
+  --         -- customize language specific settings
+  --       },
+  --     }
   --   end,
-  -- },
-  -- {
-  --   "wellle/targets.vim",
-  --   lazy = false,
-  -- },
-  -- {
-  --   "tpope/vim-fugitive",
-  --   lazy = false,
-  -- },
-  {
-    "tanvirtin/vgit.nvim",
-    lazy = false,
-    requires = "nvim-lua/plenary.nvim",
-    config = function() require("vgit").setup() end,
-  },
-  {
-    "andythigpen/nvim-coverage",
-    lazy = false,
-    requires = "nvim-lua/plenary.nvim",
-    config = function()
-      require("coverage").setup {
-        commands = true, -- create commands
-        highlights = {
-          -- customize highlight groups created by the plugin
-          covered = { fg = "#75e36b" }, -- supports style, fg, bg, sp (see :h highlight-gui)
-          uncovered = { fg = "#F07178" },
-        },
-        signs = {
-          -- use your own highlight groups or text markers
-          covered = { hl = "CoverageCovered", text = "▎" },
-          uncovered = { hl = "CoverageUncovered", text = "▎" },
-        },
-        summary = {
-          -- customize the summary pop-up
-          min_coverage = 80.0, -- minimum coverage threshold (used for highlighting)
-        },
-        lang = {
-          -- customize language specific settings
-        },
-      }
-    end,
-  },
-  -- {
-  --   "smoka7/multicursors.nvim",
-  --   lazy = false,
-  --   -- event = "VeryLazy",
-  --   dependencies = {
-  --     "smoka7/hydra.nvim",
-  --   },
-  --   opts = {},
-  --   cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
-  --   keys = {
-  --     {
-  --       mode = { "v", "n" },
-  --       "<Leader>m",
-  --       "<cmd>MCstart<cr>",
-  --       desc = "Create a selection for selected text or word under the cursor",
-  --     },
-  --   },
   -- },
   -- This generates the winbar
   -- {
