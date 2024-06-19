@@ -1,7 +1,3 @@
-# Launch tmux if not already running
-# Launch tmux if not already running
-# if [ "$TMUX" = "" ]; then tmux; fi
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -30,7 +26,7 @@ exists() {
 }
 
 
-# function to see if command exists
+# store binaries on injective
 store() {
     injectived tx wasm store --from inj17vytdwqczqz72j65saukplrktd4gyfme5agf6c $1 --generate-only > tmp.json && \
     injectived tx authz exec tmp.json --from mainnet_store_code --node https://sentry.tm.injective.network:443 --gas 6000000 --fees 3200000000000000inj
@@ -99,29 +95,17 @@ alias ga='git add'
 
 # Misc
 alias vi='nvim'
+alias vim='nvim'
 alias del-targets='find . -type d -name target -prune -exec rm -rf {} \;'
 alias signup-logs="kubectl --namespace signup-sequencer-orb-ethereum logs -f --tail=50 signup-sequencer-orb-ethereum-0 | jq 'select( .level != \"TRACE\" )'"
 
-if [[ $OSTYPE == darwin* ]]; then
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/homebrew/Caskroom/miniconda/base/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-fi
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Kubernetes
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+
+# Zoxide
 if exists zoxide
 then
     eval "$(zoxide init --cmd cd zsh)"
@@ -134,5 +118,5 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
-
+ 
 eval "$(direnv hook zsh)"

@@ -43,7 +43,6 @@ return {
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
-
       rust_analyzer = {
         settings = {
           ["rust-analyzer"] = {
@@ -57,12 +56,18 @@ return {
             check = {
               command = "clippy",
             },
-            -- cargo = {
-            --   features = {
-            --     "injective",
-            --     "injective_testnet",
-            --   },
-            -- },
+            cargo = {
+              buildScripts = {
+                enable = true,
+              },
+              -- features = {
+              --   "injective",
+              --   "injective_testnet",
+              -- },
+            },
+            procMacro = {
+              enable = true,
+            },
           },
         },
       },
@@ -121,7 +126,7 @@ return {
     },
     -- A custom `on_attach` function to be run after the default `on_attach` function
     -- takes two parameters `client` and `bufnr`  (`:h lspconfig-setup`)
-    on_attach = function(client, bufnr)
+    on_attach = function(_client, _bufnr)
       -- this would disable semanticTokensProvider for all clients
       -- client.server_capabilities.semanticTokensProvider = nil
     end,

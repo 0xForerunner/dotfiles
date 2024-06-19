@@ -2,6 +2,7 @@
 -- things like custom filetypes. This just pure lua so anything that doesn't
 -- fit in the normal config locations above can go here
 vim.o.tabstop = 4 -- A TAB character looks like 4 spaces
+vim.o.shiftwidth = 4 -- An autoindent will use 4 spaces
 
 -- Set up custom filetypes
 -- vim.filetype.add {

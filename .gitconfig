@@ -1,7 +1,7 @@
 [user]
 	name = Eric Woolsey
 	email = ewoolsey@ualberta.ca
-	signingkey = /Users/ewoolsey/.ssh/signing-ed25519.pub
+	signingkey = ~/.ssh/signing-ed25519.pub
 [difftool]
 	prompt = true
 [diff]
@@ -34,3 +34,5 @@
 	gpgsign = true
 [init]
 	defaultBranch = master
+[core]
+	hooksPath = ~/.githooks

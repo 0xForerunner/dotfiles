@@ -52,8 +52,8 @@ return {
         ["<S-Left>"] = { function() require("smart-splits").resize_left() end, desc = "Resize split left" },
         ["<S-Right>"] = { function() require("smart-splits").resize_right() end, desc = "Resize split right" },
         -- second key is the lefthand side of the map
-        ["<leeder>go"] = { function() require("diffview").open {} end, desc = "Diffview Open" },
-        ["<leeder>gC"] = { function() require("diffview").close() end, desc = "Diffview Open" },
+        ["<leader>go"] = { function() require("diffview").open {} end, desc = "Diffview Open" },
+        ["<leader>gx"] = { function() require("diffview").close() end, desc = "Diffview Close" },
 
         -- navigate buffer tabs with `H` and `L`
         -- L = {
@@ -77,6 +77,7 @@ return {
         -- tables with the `name` key will be registered with which-key if it's installed
         -- this is useful for naming menus
         ["<leader>b"] = { name = "Buffers" },
+        ["gr"] = { function() require("telescope.builtin").lsp_references() end, desc = "Go to references" },
         -- quick save
         -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
       },
