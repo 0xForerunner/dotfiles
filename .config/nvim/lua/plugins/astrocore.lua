@@ -55,6 +55,17 @@ return {
         ["<leader>go"] = { function() require("diffview").open {} end, desc = "Diffview Open" },
         ["<leader>gx"] = { function() require("diffview").close() end, desc = "Diffview Close" },
 
+        ["<leader>fz"] = {
+          function()
+            require("telescope.builtin").grep_string {
+              shorten_path = true,
+              word_match = "-w",
+              only_sort_text = true,
+              search = "",
+            }
+          end,
+          desc = "Fuzzy find in directory",
+        },
         -- navigate buffer tabs with `H` and `L`
         -- L = {
         --   function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,

@@ -15,7 +15,6 @@
 	cmd = "nvim -f -c \"Gdiffsplit!\" \"$MERGED\""
 [mergetool]
 	prompt = false
-
 [credentail]
 	useHttpPath = true
 [credential]
