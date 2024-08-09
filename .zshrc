@@ -103,7 +103,7 @@ alias signup-logs="kubectl --namespace signup-sequencer-orb-ethereum logs -f --t
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Kubernetes
-[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+# [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 
 # Zoxide
 if exists zoxide

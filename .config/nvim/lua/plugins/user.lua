@@ -39,7 +39,7 @@ return {
 
   -- You can disable default plugins as follows:
   { "max397574/better-escape.nvim", enabled = true },
-  { "tpope/vim-sleuth", enabled = true },
+  -- { "tpope/vim-sleuth", enabled = true },
   -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
   {
     "L3MON4D3/LuaSnip",
@@ -80,32 +80,31 @@ return {
       )
     end,
   },
-
-  -- {
-  --   "andythigpen/nvim-coverage",
-  --   lazy = false,
-  --   requires = "nvim-lua/plenary.nvim",
-  --   config = function()
-  --     require("coverage").setup {
-  --       commands = true, -- create commands
-  --       highlights = {
-  --         -- customize highlight groups created by the plugin
-  --         covered = { fg = "#75e36b" }, -- supports style, fg, bg, sp (see :h highlight-gui)
-  --         uncovered = { fg = "#F07178" },
-  --       },
-  --       signs = {
-  --         -- use your own highlight groups or text markers
-  --         covered = { hl = "CoverageCovered", text = "▎" },
-  --         uncovered = { hl = "CoverageUncovered", text = "▎" },
-  --       },
-  --       summary = {
-  --         -- customize the summary pop-up
-  --         min_coverage = 80.0, -- minimum coverage threshold (used for highlighting)
-  --       },
-  --       lang = {
-  --         -- customize language specific settings
-  --       },
-  --     }
-  --   end,
-  -- },
+  {
+    "andythigpen/nvim-coverage",
+    lazy = false,
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("coverage").setup {
+        commands = true, -- create commands
+        highlights = {
+          -- customize highlight groups created by the plugin
+          covered = { fg = "#75e36b" }, -- supports style, fg, bg, sp (see :h highlight-gui)
+          uncovered = { fg = "#F07178" },
+        },
+        signs = {
+          -- use your own highlight groups or text markers
+          covered = { hl = "CoverageCovered", text = "▎" },
+          uncovered = { hl = "CoverageUncovered", text = "▎" },
+        },
+        summary = {
+          -- customize the summary pop-up
+          min_coverage = 80.0, -- minimum coverage threshold (used for highlighting)
+        },
+        lang = {
+          -- customize language specific settings
+        },
+      }
+    end,
+  },
 }
