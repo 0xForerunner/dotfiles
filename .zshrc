@@ -7,8 +7,8 @@ fi
 
 # History
 HISTFILE="$HOME/.zsh_history"
-HISTSIZE=10000000
-SAVEHIST=10000000
+HISTSIZE=50000000
+SAVEHIST=50000000
 setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY             # Share history between all sessions.
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
@@ -33,6 +33,9 @@ store() {
     rm tmp.json
 }
 
+# download-audio($1) {
+#     yt-dlp -f Audio_Only --cookies-from-browser chrome $1
+# }
 
 # Plugins
 if exists fzf
@@ -49,6 +52,7 @@ then
     # switch group using `,` and `.`
     zstyle ':fzf-tab:*' switch-group ',' '.'
 fi
+
 source ~/.zsh_plugins/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.zsh_plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -76,10 +80,6 @@ then
     alias ls='eza'
 else
     alias ll='ls -lh'
-fi
-if exists bat
-then
-    alias cat='bat'
 fi
 
 alias n='nept'
