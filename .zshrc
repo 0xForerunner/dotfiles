@@ -58,6 +58,7 @@ source ~/.zsh_plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh_plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 source ~/.zsh_plugins/zsh-history-substring-search/zsh-history-substring-search.plugin.zsh
+source $HOME/.elan/env       
 
 # Configuration
 export ZVM_VI_ESCAPE_BINDKEY=jk
