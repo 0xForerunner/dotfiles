@@ -9,6 +9,9 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function() vim.opt_local.conceallevel = 2 end,
 })
 
+-- disable default mappings
+vim.api.nvim_set_keymap("n", "<leader>o", "", { noremap = true, silent = true })
+
 -- Set up custom filetypes
 -- vim.filetype.add {
 --   extension = {

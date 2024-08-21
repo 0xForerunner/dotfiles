@@ -66,15 +66,6 @@ return {
           end,
           desc = "Fuzzy find in directory",
         },
-        -- navigate buffer tabs with `H` and `L`
-        -- L = {
-        --   function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
-        --   desc = "Next buffer",
-        -- },
-        -- H = {
-        --   function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
-        --   desc = "Previous buffer",
-        -- },
 
         -- mappings seen under group name "Buffer"
         ["<leader>bD"] = {
@@ -89,8 +80,40 @@ return {
         -- this is useful for naming menus
         ["<leader>b"] = { name = "Buffers" },
         ["gr"] = { function() require("telescope.builtin").lsp_references() end, desc = "Go to references" },
-        -- quick save
-        -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
+        ["gl"] = {
+          function() return require("obsidian").util.gf_passthrough() end,
+          desc = "Obsidian follow link",
+        },
+        -- Not sure why this doesn't work...
+        -- ["<leader>o"] = { name = "Obsidian" },
+        ["<leader>oh"] = {
+          function() return require("obsidian").util.toggle_checkbox() end,
+          desc = "Obsidian toggle checkbox",
+        },
+        ["<leader>ob"] = {
+          "<Cmd>ObsidianBacklinks<CR>",
+          desc = "Backlinks",
+        },
+        ["<leader>ot"] = {
+          "<Cmd>ObsidianNewFromTemplate<CR>",
+          desc = "New from template",
+        },
+        ["<leader>oi"] = {
+          "<Cmd>ObsidianPasteImage<CR>",
+          desc = "Paste image",
+        },
+        ["<leader>ol"] = {
+          "<Cmd>ObsidianLink<CR>",
+          desc = "Obsidian link",
+        },
+        ["<leader>or"] = {
+          "<Cmd>ObsidianRename<CR>",
+          desc = "Rename",
+        },
+        ["<leader>on"] = {
+          "<Cmd>ObsidianNew<CR>",
+          desc = "New",
+        },
       },
       t = {
         -- setting a mapping to false will disable it

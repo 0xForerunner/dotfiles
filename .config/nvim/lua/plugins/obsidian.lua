@@ -15,15 +15,16 @@ return {
       opts = {
         mappings = {
           n = {
-            ["gf"] = {
-              function()
-                if require("obsidian").util.cursor_on_markdown_link() then
-                  return "<Cmd>ObsidianFollowLink<CR>"
-                else
-                  return "gf"
-                end
-              end,
-              desc = "Obsidian Follow Link",
+            ["<leader>o"] = {
+              false,
+              -- function()
+              --   if require("obsidian").util.cursor_on_markdown_link() then
+              --     return "<Cmd>ObsidianFollowLink<CR>"
+              --   else
+              --     return "gf"
+              --   end
+              -- end,
+              -- desc = "Obsidian Follow Link",
             },
           },
         },
@@ -41,19 +42,9 @@ return {
       -- Set to false to disable completion.
       nvim_cmp = true,
       -- Trigger completion at 2 chars.
-      min_chars = 2,
+      min_chars = 1,
     },
     mappings = {
-      -- Overrides the 'gf' mapping to work on markdown/wiki links within your vault.
-      -- ["gf"] = {
-      --   action = function() return require("obsidian").util.gf_passthrough() end,
-      --   opts = { noremap = false, expr = true, buffer = true },
-      -- },
-      -- Toggle check-boxes.
-      ["<leader>ch"] = {
-        action = function() return require("obsidian").util.toggle_checkbox() end,
-        opts = { buffer = true },
-      },
       -- Smart action depending on context, either follow link or toggle checkbox.
       ["<cr>"] = {
         action = function() return require("obsidian").util.smart_action() end,
@@ -111,12 +102,14 @@ return {
       time_format = "%H:%M",
     },
 
+    ---@return table
     note_frontmatter_func = function(note)
       -- This is equivalent to the default frontmatter function.
-      local out = { id = note.id, aliases = note.aliases, tags = note.tags }
+      -- local out = { id = note.id, aliases = note.aliases, tags = note.tags }
+      local out = { tags = note.tags }
       -- `note.metadata` contains any manually added fields in the frontmatter.
       -- So here we just make sure those fields are kept in the frontmatter.
-      if note.metadata ~= nil and require("obsidian").util.table_length(note.metadata) > 0 then
+      if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
         for k, v in pairs(note.metadata) do
           out[k] = v
         end
@@ -127,5 +120,35 @@ return {
     -- Optional, by default when you use `:ObsidianFollowLink` on a link to an external
     -- URL it will be ignored but you can customize this behavior here.
     follow_url_func = vim.ui.open or function(url) require("astrocore").system_open(url) end,
+
+    -- Optional, customize how note IDs are generated given an optional title.
+    ---@param title string|?
+    ---@return string
+    note_id_func = function(title)
+      -- Create note IDs in a Zettelkasten format with a timestamp and a suffix.
+      -- In this case a note with the title 'My new note' will be given an ID that looks
+      -- like '1657296016-my-new-note', and therefore the file name '1657296016-my-new-note.md'
+      local suffix = ""
+      if title ~= nil then
+        return title
+        -- If title is given, transform it into valid file name.
+        -- suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+      else
+        -- If title is nil, just add 4 random uppercase letters to the suffix.
+        for _ = 1, 4 do
+          suffix = suffix .. string.char(math.random(65, 90))
+        end
+      end
+      return tostring(os.time()) .. "-" .. suffix
+    end,
+
+    -- Optional, customize how note file names are generated given the ID, target directory, and title.
+    ---@param spec { id: string, dir: obsidian.Path, title: string|? }
+    ---@return string|obsidian.Path The full path to the new note.
+    note_path_func = function(spec)
+      -- This is equivalent to the default behavior.
+      local path = spec.dir / tostring(spec.id)
+      return path:with_suffix ".md"
+    end,
   },
 }
