@@ -4,6 +4,11 @@
 vim.o.tabstop = 4 -- A TAB character looks like 4 spaces
 vim.o.shiftwidth = 4 -- An autoindent will use 4 spaces
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function() vim.opt_local.conceallevel = 2 end,
+})
+
 -- Set up custom filetypes
 -- vim.filetype.add {
 --   extension = {

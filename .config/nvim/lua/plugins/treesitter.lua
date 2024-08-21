@@ -8,6 +8,8 @@ return {
     opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
       "lua",
       "vim",
+      "markdown",
+      "markdown_inline",
       -- add more arguments for adding more treesitter parsers
     })
   end,
