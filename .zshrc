@@ -33,6 +33,15 @@ store() {
     rm tmp.json
 }
 
+build-wasm() {
+    RUSTFLAGS="-C link-arg=-s" RUSTUP_TOOLCHAIN="1.69.0" cargo build --release --lib --target=wasm32-unknown-unknown -p $1 && \
+        
+}
+
+optimize() {
+    wasm-opt -Oz -o out$1 $1
+}
+
 # download-audio($1) {
 #     yt-dlp -f Audio_Only --cookies-from-browser chrome $1
 # }
