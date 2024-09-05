@@ -4,7 +4,14 @@ return {
   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand':
   version = "*",
   lazy = true,
-  event = { "bufreadpre " .. vim.fn.expand "~" .. "/notes/**.md" },
+  ft = "markdown",
+  --   event = {
+  --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+  --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
+  --   -- refer to `:h file-pattern` for more examples
+  --   "BufReadPre path/to/my-vault/*.md",
+  --   "BufNewFile path/to/my-vault/*.md",
+  -- },
   -- event = { "BufReadPre  */notes/*.md" },
   dependencies = {
     "nvim-lua/plenary.nvim",
@@ -34,8 +41,12 @@ return {
   opts = {
     workspaces = {
       {
-        name = "notes",
+        name = "Notes",
         path = "~/notes",
+      },
+      {
+        name = "Notes",
+        path = "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes",
       },
     },
     completion = {

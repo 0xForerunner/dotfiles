@@ -52,18 +52,14 @@ return {
               },
               prefix = "self",
             },
-            checkOnSave = true,
-            check = {
-              command = "clippy",
-            },
+            checkOnSave = false,
+            -- check = {
+            --   command = "clippy",
+            -- },
             cargo = {
               buildScripts = {
                 enable = true,
               },
-              -- features = {
-              --   "injective",
-              --   "injective_testnet",
-              -- },
             },
             procMacro = {
               enable = true,
