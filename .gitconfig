@@ -21,6 +21,8 @@
 	helper = osxkeychain
 [submodule]
 	recurse = true
+	fetchJobs = 10
+	fethJobs = 10
 [pull]
 	rebase = true
 [url "git@github.com:"]
@@ -35,3 +37,5 @@
 	defaultBranch = master
 [core]
 	hooksPath = ~/.githooks
+[clone]
+	recurseSubmodules = true

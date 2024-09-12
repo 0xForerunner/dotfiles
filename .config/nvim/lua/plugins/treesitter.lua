@@ -10,6 +10,7 @@ return {
       "vim",
       "markdown",
       "markdown_inline",
+      "starlark",
       -- add more arguments for adding more treesitter parsers
     })
   end,
