@@ -52,10 +52,12 @@ return {
               },
               prefix = "self",
             },
-            checkOnSave = false,
-            -- check = {
-            --   command = "clippy",
-            -- },
+            checkOnSave = true,
+            check = {
+              -- command = "clippy",
+              workspace = true,
+              extraArgs = { "--all-features" },
+            },
             cargo = {
               buildScripts = {
                 enable = true,
