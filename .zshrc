@@ -28,23 +28,21 @@ exists() {
 
 # store binaries on injective
 store() {
-    injectived tx wasm store --from inj17vytdwqczqz72j65saukplrktd4gyfme5agf6c $1 --generate-only > tmp.json && \
-    injectived tx authz exec tmp.json --from mainnet_store_code --node https://sentry.tm.injective.network:443 --gas 6000000 --fees 3200000000000000inj
-    rm tmp.json
+    injectived tx wasm store $1 \
+    --from mainnet_store_code --node https://sentry.tm.injective.network:443 --gas 6000000 --fees 3200000000000000inj
 }
 
 build-wasm() {
     RUSTFLAGS="-C link-arg=-s" RUSTUP_TOOLCHAIN="1.69.0" cargo build --release --lib --target=wasm32-unknown-unknown -p $1 && \
-        
 }
 
 optimize() {
     wasm-opt -Oz -o out$1 $1
 }
 
-# download-audio($1) {
-#     yt-dlp -f Audio_Only --cookies-from-browser chrome $1
-# }
+download-audio() {
+    yt-dlp -f Audio_Only --cookies-from-browser chrome $1
+}
 
 # Plugins
 if exists fzf

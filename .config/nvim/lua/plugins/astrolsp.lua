@@ -54,7 +54,7 @@ return {
             },
             checkOnSave = true,
             check = {
-              -- command = "clippy",
+              command = "clippy",
               workspace = true,
               extraArgs = { "--all-features" },
             },
