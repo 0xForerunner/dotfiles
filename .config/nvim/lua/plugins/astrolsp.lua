@@ -55,8 +55,6 @@ return {
             checkOnSave = true,
             check = {
               command = "clippy",
-              workspace = true,
-              extraArgs = { "--all-features" },
             },
             cargo = {
               buildScripts = {
