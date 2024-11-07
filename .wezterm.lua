@@ -11,6 +11,8 @@ local config = wezterm.config_builder()
 config.color_scheme = "Catppuccin Mocha"
 config.enable_tab_bar = false
 config.window_close_confirmation = "NeverPrompt"
+config.max_fps = 120
+config.animation_fps = 120
 
 config.leader = { key = "a", mods = "CTRL" }
 -- config.default_pro = { "/opt/homebrew/bin/nu" }
