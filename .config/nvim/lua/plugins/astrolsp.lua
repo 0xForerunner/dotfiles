@@ -46,24 +46,24 @@ return {
       rust_analyzer = {
         settings = {
           ["rust-analyzer"] = {
-            imports = {
-              granularity = {
-                group = "module",
-              },
-              prefix = "self",
-            },
-            checkOnSave = true,
-            check = {
-              command = "clippy",
-            },
-            cargo = {
-              buildScripts = {
-                enable = true,
-              },
-            },
-            procMacro = {
-              enable = true,
-            },
+            -- imports = {
+            --   granularity = {
+            --     group = "module",
+            --   },
+            --   prefix = "self",
+            -- },
+            -- checkOnSave = true,
+            -- check = {
+            --   command = "clippy",
+            -- },
+            -- cargo = {
+            --   buildScripts = {
+            --     enable = true,
+            --   },
+            -- },
+            -- procMacro = {
+            --   enable = true,
+            -- },
           },
         },
       },
