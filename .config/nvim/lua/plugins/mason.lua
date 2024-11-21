@@ -11,7 +11,7 @@ return {
       opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
         "lua_ls",
         "gopls",
-        "rust_analyzer",
+        "rust_analyzer@2024-10-21",
       })
     end,
   },
