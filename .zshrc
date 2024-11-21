@@ -29,7 +29,7 @@ exists() {
 # store binaries on injective
 store() {
     injectived tx wasm store $1 \
-    --from mainnet_store_code --node https://sentry.tm.injective.network:443 --gas 6000000 --fees 3200000000000000inj
+    --from store_code --node https://sentry.tm.injective.network:443 --gas auto --gas-adjustment 1.3 --fees 1500000000000000inj
 }
 
 build-wasm() {
