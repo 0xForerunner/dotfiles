@@ -130,3 +130,6 @@ esac
 # pnpm end
  
 eval "$(direnv hook zsh)"
+
+export NARGO_HOME="$HOME/.nargo"
+export PATH="$PATH:$NARGO_HOME/bin"

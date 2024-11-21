@@ -50,7 +50,6 @@ return {
       luasnip.filetype_extend("javascript", { "javascriptreact" })
     end,
   },
-
   {
     "windwp/nvim-autopairs",
     config = function(plugin, opts)
@@ -106,5 +105,9 @@ return {
         },
       }
     end,
+  },
+  {
+    "noir-lang/noir-nvim",
+    lazy = false,
   },
 }
