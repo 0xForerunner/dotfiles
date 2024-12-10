@@ -18,6 +18,7 @@ return {
   { import = "astrocommunity.pack.terraform" },
   { import = "astrocommunity.pack.json" },
   { import = "astrocommunity.pack.lua" },
+  { import = "astrocommunity.pack.helm" },
 
   { import = "astrocommunity.recipes.heirline-vscode-winbar" },
   { import = "astrocommunity.motion.harpoon" },
