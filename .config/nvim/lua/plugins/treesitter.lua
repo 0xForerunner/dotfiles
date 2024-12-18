@@ -11,6 +11,7 @@ return {
       "markdown",
       "markdown_inline",
       "starlark",
+      "solidity",
       -- add more arguments for adding more treesitter parsers
     })
   end,

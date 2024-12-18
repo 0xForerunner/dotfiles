@@ -24,7 +24,7 @@ return {
           -- "go",
         },
         ignore_filetypes = { -- disable format on save for specified filetypes
-          -- "python",
+          "markdown",
         },
       },
       disabled = { -- disable formatting capabilities for the listed language servers
@@ -66,6 +66,26 @@ return {
             -- },
           },
         },
+      },
+      solidity_ls = {
+        diagnostics = {
+          enable = true,
+          solhint = {
+            enable = true,
+            rules = {
+              ["avoid-sha3"] = "warning",
+            },
+          },
+        },
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
+        filetypes = { "solidity" },
+        root_dir = require("lspconfig.util").root_pattern(
+          "foundry.toml",
+          "truffle-config.js",
+          "hardhat.config.js",
+          "package.json",
+          ".git"
+        ),
       },
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
     },

@@ -44,10 +44,6 @@ return {
         name = "Notes",
         path = "~/notes",
       },
-      {
-        name = "Notes",
-        path = "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes",
-      },
     },
     completion = {
       -- Set to false to disable completion.
