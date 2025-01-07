@@ -33,7 +33,11 @@ store() {
 }
 
 build-wasm() {
-    RUSTFLAGS="-C link-arg=-s" RUSTUP_TOOLCHAIN="1.69.0" cargo build --release --lib --target=wasm32-unknown-unknown -p $1 && \
+    # RUSTFLAGS="-C link-arg=-s" RUSTUP_TOOLCHAIN="1.69.0" cargo build --release --lib --target=wasm32-unknown-unknown -p $1 && \
+    docker run --rm -v "$(pwd)":/code \                                
+    --mount type=volume,source="$(basename "$(pwd)")_cache",target=/target \
+    --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
+    cosmwasm/optimizer:0.15.1
 }
 
 optimize() {
@@ -137,3 +141,19 @@ export PATH="$PATH:$NARGO_HOME/bin"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/homebrew/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
+        . "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/homebrew/Caskroom/miniconda/base/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

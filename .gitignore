@@ -1,2 +1,3 @@
 .tmux/plugins/*
 !/.config/nvim
+.DS_Store
