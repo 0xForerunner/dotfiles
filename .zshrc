@@ -108,6 +108,7 @@ alias ga='git add'
 # Misc
 alias vi='nvim'
 alias vim='nvim'
+alias daily='nvim +"ObsidianToday"'
 alias del-targets='find . -type d -name target -prune -exec rm -rf {} \;'
 alias signup-logs="kubectl --namespace signup-sequencer-orb-ethereum logs -f --tail=50 signup-sequencer-orb-ethereum-0 | jq 'select( .level != \"TRACE\" )'"
 

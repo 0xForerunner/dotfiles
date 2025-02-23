@@ -114,6 +114,14 @@ return {
           "<Cmd>ObsidianNew<CR>",
           desc = "New",
         },
+        ["<leader>od"] = {
+          "<Cmd>ObsidianToday<CR>",
+          desc = "Open today's note",
+        },
+        ["<leader>oy"] = {
+          "<Cmd>ObsidianYesterday<CR>",
+          desc = "Open yesterday's note",
+        },
       },
       t = {
         -- setting a mapping to false will disable it

@@ -1,9 +1,7 @@
 return {
   "epwalsh/obsidian.nvim",
-  -- the obsidian vault in this default config  ~/obsidian-vault
-  -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand':
   version = "*",
-  lazy = true,
+  lazy = false,
   ft = "markdown",
   --   event = {
   --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
@@ -107,6 +105,13 @@ return {
       subdir = "templates",
       date_format = "%Y-%m-%d-%a",
       time_format = "%H:%M",
+    },
+
+    daily_notes = {
+      folder = "Daily",
+      date_format = "%Y-%m-%d",
+      default_tags = { "daily" },
+      template = nil,
     },
 
     ---@return table
