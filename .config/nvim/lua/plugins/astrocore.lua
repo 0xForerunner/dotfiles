@@ -42,7 +42,7 @@ return {
     mappings = {
       -- first key is the mode
       n = {
-        ["<leader>a"] = {
+        ["<leader>s"] = {
           "<Cmd>vsplit<CR> <Cmd>split<CR> <Cmd>terminal<CR> <S-Down><S-Down><S-Down><S-Down>",
           desc = "Open standard layout",
         },
