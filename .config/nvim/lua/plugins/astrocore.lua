@@ -89,7 +89,7 @@ return {
         ["<S-Left>"] = { function() require("smart-splits").resize_left() end, desc = "Resize split left" },
         ["<S-Right>"] = { function() require("smart-splits").resize_right() end, desc = "Resize split right" },
         -- second key is the lefthand side of the map
-        ["<leader>go"] = { function() require("diffview").open {} end, desc = "Diffview Open" },
+        ["<leader>gd"] = { function() require("diffview").open {} end, desc = "Diffview Open" },
         ["<leader>gx"] = { function() require("diffview").close() end, desc = "Diffview Close" },
 
         ["<leader>fz"] = {
