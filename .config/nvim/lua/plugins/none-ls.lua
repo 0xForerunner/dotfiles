@@ -18,11 +18,11 @@ return {
       -- null_ls.builtins.formatting.stylua,
       -- null_ls.builtins.formatting.prettier,
       null_ls.builtins.diagnostics.solhint,
-      null_ls.builtins.formatting.forge_fmt.with {
-        command = "forge",
-        args = { "fmt" },
-        to_temp_file = true, -- Forge needs a file, so use a temporary file for stdin-based workflows.
-      },
+      -- null_ls.builtins.formatting.forge_fmt.with {
+      --   command = "forge",
+      --   args = { "fmt" },
+      --   to_temp_file = true, -- Forge needs a file, so use a temporary file for stdin-based workflows.
+      -- },
     })
   end,
 }

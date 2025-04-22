@@ -81,7 +81,7 @@ bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
 # Autosuggestions
-bindkey '^ ' autosuggest-accept
+bindkey '^J' autosuggest-accept
 
 # Aliases
 # Commands

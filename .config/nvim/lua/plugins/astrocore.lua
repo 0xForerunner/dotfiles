@@ -88,7 +88,7 @@ return {
         ["<S-Down>"] = { function() require("smart-splits").resize_down() end, desc = "Resize split down" },
         ["<S-Left>"] = { function() require("smart-splits").resize_left() end, desc = "Resize split left" },
         ["<S-Right>"] = { function() require("smart-splits").resize_right() end, desc = "Resize split right" },
-        -- second key is the lefthand side of the map
+        ["<leader>gh"] = { function() require("diffview").file_history(nil, {}) end, desc = "Diffview File History" },
         ["<leader>gd"] = { function() require("diffview").open {} end, desc = "Diffview Open" },
         ["<leader>gx"] = { function() require("diffview").close() end, desc = "Diffview Close" },
 
@@ -103,7 +103,6 @@ return {
           end,
           desc = "Fuzzy find in directory",
         },
-        ["gr"] = { function() require("telescope.builtin").lsp_references() end, desc = "Go to references" },
         ["gl"] = {
           function() return require("obsidian").util.gf_passthrough() end,
           desc = "Obsidian follow link",
@@ -145,6 +144,11 @@ return {
         ["<leader>oy"] = {
           "<Cmd>ObsidianYesterday<CR>",
           desc = "Open yesterday's note",
+        },
+
+        ["<leader>r"] = {
+          "<Cmd>GrugFar<CR>",
+          desc = "Find and Replace",
         },
       },
     },
