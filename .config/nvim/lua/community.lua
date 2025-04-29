@@ -15,7 +15,7 @@ return {
   { import = "astrocommunity.pack.json" },
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.helm" },
-  { import = "astrocommunity.pack.ansible" },
+  -- { import = "astrocommunity.pack.ansible" },
 
   { import = "astrocommunity.recipes.heirline-vscode-winbar" },
   { import = "astrocommunity.motion.harpoon" },
@@ -26,6 +26,5 @@ return {
   { import = "astrocommunity.completion.copilot-lua-cmp" },
   -- { import = "astrocommunity.markdown-and-latex.markdown-preview-nvim" },
   { import = "astrocommunity.diagnostics.trouble-nvim" },
-  { import = "astrocommunity.git.neogit" },
   { import = "astrocommunity.search.grug-far-nvim" },
 }

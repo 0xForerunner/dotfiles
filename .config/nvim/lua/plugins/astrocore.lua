@@ -79,10 +79,10 @@ return {
         -- ["<C-S>"] = false,
         --
         -- CUSTOM
-        ["<leader>s"] = {
-          "<Cmd>vsplit<CR> <Cmd>split<CR> <Cmd>terminal<CR> <S-Down><S-Down><S-Down><S-Down>",
-          desc = "Open standard layout",
-        },
+        -- ["<leader>s"] = {
+        --   "<Cmd>vsplit<CR> <Cmd>split<CR> <Cmd>terminal<CR> <S-Down><S-Down><S-Down><S-Down>",
+        --   desc = "Open standard layout",
+        -- },
         -- mappings seen under group name "Buffer"
         ["<S-Up>"] = { function() require("smart-splits").resize_up() end, desc = "Resize split up" },
         ["<S-Down>"] = { function() require("smart-splits").resize_down() end, desc = "Resize split down" },
