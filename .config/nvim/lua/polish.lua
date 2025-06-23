@@ -9,5 +9,8 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function() vim.opt_local.conceallevel = 2 end,
 })
 
+-- allows 'words' to contain dashes
+vim.opt.iskeyword:append "-"
+
 -- disable default mappings
 vim.api.nvim_set_keymap("n", "<leader>o", "", { noremap = true, silent = true })

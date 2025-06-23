@@ -91,18 +91,6 @@ return {
         ["<leader>gh"] = { function() require("diffview").file_history(nil, {}) end, desc = "Diffview File History" },
         ["<leader>gd"] = { function() require("diffview").open {} end, desc = "Diffview Open" },
         ["<leader>gx"] = { function() require("diffview").close() end, desc = "Diffview Close" },
-
-        ["<leader>fz"] = {
-          function()
-            require("telescope.builtin").grep_string {
-              shorten_path = true,
-              word_match = "-w",
-              only_sort_text = true,
-              search = "",
-            }
-          end,
-          desc = "Fuzzy find in directory",
-        },
         ["gl"] = {
           function() return require("obsidian").util.gf_passthrough() end,
           desc = "Obsidian follow link",
@@ -144,11 +132,6 @@ return {
         ["<leader>oy"] = {
           "<Cmd>ObsidianYesterday<CR>",
           desc = "Open yesterday's note",
-        },
-
-        ["<leader>r"] = {
-          "<Cmd>GrugFar<CR>",
-          desc = "Find and Replace",
         },
       },
     },

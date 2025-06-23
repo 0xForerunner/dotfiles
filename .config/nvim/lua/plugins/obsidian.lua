@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
   "epwalsh/obsidian.nvim",
   version = "*",
@@ -18,7 +19,6 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
     "hrsh7th/nvim-cmp",
-    "nvim-telescope/telescope.nvim",
     {
       "AstroNvim/astrocore",
       opts = {
@@ -103,7 +103,7 @@ return {
       },
     },
     use_advanced_uri = true,
-    finder = "telescope.nvim",
+    finder = "snacks.nvim",
 
     templates = {
       subdir = "templates",

@@ -75,7 +75,7 @@ return {
             :with_move(cond.none())
             -- don't delete if the next character is xx
             :with_del(cond.not_after_regex "xx")
-            -- disable adding a newline when you press <cr>
+            -- disable adding a newline when you press <cr>?
             :with_cr(cond.none()),
         },
         -- disable for .vim files, but it work for another filetypes
@@ -115,9 +115,5 @@ return {
         },
       }
     end,
-  },
-  {
-    "noir-lang/noir-nvim",
-    lazy = false,
   },
 }

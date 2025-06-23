@@ -25,7 +25,6 @@ exists() {
     fi
 }
 
-
 # store binaries on injective
 store() {
     injectived tx wasm store $1 \
@@ -159,3 +158,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+export PATH="${HOME}/.bb:${PATH}"
+export PATH="/Users/eric.woolsey/.bb:$PATH"
+export PATH="$PATH:/Users/eric.woolsey/.aztec/bin"
