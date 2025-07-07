@@ -20,7 +20,6 @@ return {
   { import = "astrocommunity.recipes.heirline-vscode-winbar" },
   { import = "astrocommunity.motion.harpoon" },
   { import = "astrocommunity.git.diffview-nvim" },
-  -- { import = "astrocommunity.git.octo-nvim" },
   { import = "astrocommunity.motion.leap-nvim" },
   { import = "astrocommunity.scrolling.neoscroll-nvim" },
   { import = "astrocommunity.colorscheme.catppuccin" },

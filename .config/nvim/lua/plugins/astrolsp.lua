@@ -51,18 +51,21 @@ return {
             --   },
             --   prefix = "self",
             -- },
-            -- checkOnSave = true,
-            -- check = {
-            --   command = "clippy",
-            -- },
-            -- cargo = {
-            --   buildScripts = {
-            --     enable = true,
-            --   },
-            -- },
-            -- procMacro = {
-            --   enable = true,
-            -- },
+            hover = { -- everything under this table is new / safe to add
+              linksInHover = true, -- show `[Type]` & external docs hyperlinks
+            },
+            checkOnSave = true,
+            check = {
+              command = "clippy",
+            },
+            cargo = {
+              buildScripts = {
+                enable = true,
+              },
+            },
+            procMacro = {
+              enable = true,
+            },
           },
         },
       },
