@@ -38,10 +38,17 @@ return {
     -- enable servers that you already have installed without mason
     servers = {
       -- "pyright"
+      "noir_ls",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
+      noir_ls = {
+        cmd = { "nargo", "lsp" }, -- comes from the Noir toolchain
+        filetypes = { "noir" },
+        root_dir = require("lspconfig.util").root_pattern("Nargo.toml", ".git"),
+        single_file_support = true,
+      },
       rust_analyzer = {
         settings = {
           ["rust-analyzer"] = {
