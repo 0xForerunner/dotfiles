@@ -58,13 +58,13 @@ return {
             --   },
             --   prefix = "self",
             -- },
-            hover = { -- everything under this table is new / safe to add
-              linksInHover = true, -- show `[Type]` & external docs hyperlinks
-            },
-            checkOnSave = true,
-            check = {
-              command = "clippy",
-            },
+            -- hover = { -- everything under this table is new / safe to add
+            --   linksInHover = true, -- show `[Type]` & external docs hyperlinks
+            -- },
+            -- checkOnSave = true,
+            -- check = {
+            --   command = "clippy",
+            -- },
             cargo = {
               buildScripts = {
                 enable = true,
@@ -73,16 +73,30 @@ return {
             procMacro = {
               enable = true,
             },
+            workspace = {
+              symbol = {
+                search = {
+                  scope = "workspace_and_dependencies",
+                  kind = "all_symbols", -- default is "only_types"
+                  excludeImports = true,
+                  limit = 10000,
+                },
+              },
+            },
           },
         },
       },
-      solidity_ls = {
-        diagnostics = {
-          enable = true,
-          solhint = {
-            enable = true,
-            rules = {
-              ["avoid-sha3"] = "warning",
+      solidity = {
+        settings = {
+          ["solidity_ls_nomicfoundation"] = {
+            diagnostics = {
+              enable = true,
+              solhint = {
+                enable = true,
+                rules = {
+                  ["avoid-sha3"] = "warning",
+                },
+              },
             },
           },
         },
@@ -153,6 +167,62 @@ return {
         gri = {
           function() require("snacks").picker.lsp_implementations() end,
           desc = "LSP implementations (snacks)",
+        },
+        ["<Leader>lT"] = {
+          function()
+            require("snacks").picker.lsp_workspace_symbols {
+              -- list the LSP kinds you consider a “type”
+              filter = {
+                default = {
+                  "Struct",
+                  "Enum",
+                  "Class",
+                  "Trait",
+                  "Interface",
+                  "TypeAlias",
+                  "TypeParameter",
+                },
+              },
+            }
+          end,
+          desc = "LSP workspace types",
+        },
+        ["<Leader>lM"] = {
+          function()
+            require("snacks").picker.lsp_workspace_symbols {
+              -- list the LSP kinds you consider a “type”
+              filter = { default = { "Method", "Function", "Constructor", "Field", "Property", "Variable" } },
+            }
+          end,
+          desc = "LSP workspace methods",
+        },
+        ["<Leader>lt"] = {
+          function()
+            require("snacks").picker.lsp_symbols {
+              -- list the LSP kinds you consider a “type”
+              filter = {
+                default = {
+                  "Struct",
+                  "Enum",
+                  "Class",
+                  "Trait",
+                  "Interface",
+                  "TypeAlias",
+                  "TypeParameter",
+                },
+              },
+            }
+          end,
+          desc = "LSP workspace types",
+        },
+        ["<Leader>lm"] = {
+          function()
+            require("snacks").picker.lsp_symbols {
+              -- list the LSP kinds you consider a “type”
+              filter = { default = { "Method", "Function", "Constructor", "Field", "Property", "Variable" } },
+            }
+          end,
+          desc = "LSP workspace methods",
         },
       },
     },

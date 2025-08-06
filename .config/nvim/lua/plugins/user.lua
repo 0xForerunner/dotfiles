@@ -39,7 +39,6 @@ return {
       },
     },
   },
-
   -- You can disable default plugins as follows:
   -- { "max397574/better-escape.nvim", enabled = false },
 
@@ -53,7 +52,6 @@ return {
       luasnip.filetype_extend("javascript", { "javascriptreact" })
     end,
   },
-
   {
     "windwp/nvim-autopairs",
     config = function(plugin, opts)

@@ -3,6 +3,7 @@
 -- fit in the normal config locations above can go here
 -- vim.o.tabstop = 4 -- A TAB character looks like 4 spaces
 -- vim.o.shiftwidth = 4 -- An autoindent will use 4 spaces
+vim.opt.swapfile = false -- no more .swp files
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",

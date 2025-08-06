@@ -91,7 +91,7 @@ return {
         ["<S-Right>"] = { function() require("smart-splits").resize_right() end, desc = "Resize split right" },
         ["<leader>gh"] = { function() require("diffview").file_history(nil, {}) end, desc = "Diffview File History" },
         ["<leader>gd"] = { function() require("diffview").open {} end, desc = "Diffview Open" },
-        ["<leader>gm"] = { function() require("diffview").open { "main" } end, desc = "Diffview Open Main" },
+        ["<leader>gm"] = { function() require("diffview").open { "main...HEAD" } end, desc = "Diffview Open Main" },
         ["<leader>gx"] = { function() require("diffview").close() end, desc = "Diffview Close" },
         ["gl"] = {
           function() return require("obsidian").util.gf_passthrough() end,
