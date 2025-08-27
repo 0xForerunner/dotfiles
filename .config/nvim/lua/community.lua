@@ -17,7 +17,7 @@ return {
   { import = "astrocommunity.pack.helm" },
   -- { import = "astrocommunity.pack.ansible" },
 
-  { import = "astrocommunity.recipes.heirline-vscode-winbar" },
+  -- { import = "astrocommunity.recipes.heirline-vscode-winbar" },
   { import = "astrocommunity.motion.harpoon" },
   { import = "astrocommunity.git.diffview-nvim" },
   { import = "astrocommunity.motion.leap-nvim" },

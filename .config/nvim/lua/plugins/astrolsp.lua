@@ -61,10 +61,11 @@ return {
             -- hover = { -- everything under this table is new / safe to add
             --   linksInHover = true, -- show `[Type]` & external docs hyperlinks
             -- },
-            -- checkOnSave = true,
-            -- check = {
-            --   command = "clippy",
-            -- },
+            checkOnSave = true,
+            check = {
+              command = "check",
+              extraArgs = { "--no-deps" },
+            },
             cargo = {
               buildScripts = {
                 enable = true,
@@ -73,16 +74,16 @@ return {
             procMacro = {
               enable = true,
             },
-            workspace = {
-              symbol = {
-                search = {
-                  scope = "workspace_and_dependencies",
-                  kind = "all_symbols", -- default is "only_types"
-                  excludeImports = true,
-                  limit = 10000,
-                },
-              },
-            },
+            -- workspace = {
+            --   symbol = {
+            --     search = {
+            --       scope = "workspace_and_dependencies",
+            --       kind = "all_symbols", -- default is "only_types"
+            --       excludeImports = true,
+            --       limit = 10000,
+            --     },
+            --   },
+            -- },
           },
         },
       },
