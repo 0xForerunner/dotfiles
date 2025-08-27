@@ -64,7 +64,7 @@ return {
             checkOnSave = true,
             check = {
               command = "check",
-              extraArgs = { "--no-deps" },
+              extraArgs = {},
             },
             cargo = {
               buildScripts = {
@@ -160,6 +160,10 @@ return {
           cond = function(client)
             return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens ~= nil
           end,
+        },
+        gd = {
+          function() require("snacks").picker.lsp_definitions() end,
+          desc = "LSP references (snacks)",
         },
         grr = {
           function() require("snacks").picker.lsp_references() end,
