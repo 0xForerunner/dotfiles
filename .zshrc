@@ -117,6 +117,14 @@ alias notes='nvim $HOME/notes'
 alias del-targets='find . -type d -name target -prune -exec rm -rf {} \;'
 alias signup-logs="kubectl --namespace signup-sequencer-orb-ethereum logs -f --tail=50 signup-sequencer-orb-ethereum-0 | jq 'select( .level != \"TRACE\" )'"
 
+# Aws
+alias dev-eu-central-2='export AWS_PROFILE=tfh-crypto-dev-admin AWS_REGION=eu-central-2 && tfh eks login --cluster crypto-dev-eu-central-2 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
+alias stage-eu-central-2='export AWS_PROFILE=tfh-crypto-stage-cryptopoweruseraccess AWS_REGION=eu-central-2 && tfh eks login --cluster crypto-stage-eu-central-2 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
+alias prod-eu-central-2='export AWS_PROFILE=tfh-crypto-prod-cryptopoweruseraccess AWS_REGION=eu-central-2 && tfh eks login --cluster crypto-prod-eu-central-2 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
+alias stage-us-east-1='export AWS_PROFILE=tfh-crypto-stage-cryptopoweruseraccess AWS_REGION=us-east-1 && tfh eks login --cluster crypto-v2-stage-us-east-1 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
+alias prod-us-east-1='export AWS_PROFILE=tfh-crypto-prod-cryptopoweruseraccess AWS_REGION=us-east-1 && tfh eks login --cluster crypto-v2-prod-us-east-1 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
+alias argo='kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}"| base64 -d | pbcopy && kubectl port-forward -n argocd service/argocd-server 8080:http && open http://localhost:8080'
+
 export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

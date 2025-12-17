@@ -15,10 +15,8 @@ config.max_fps = 120
 config.animation_fps = 120
 
 config.leader = { key = "a", mods = "CTRL" }
--- config.default_pro = { "/opt/homebrew/bin/nu" }
-config.keys = {
-	-- tmux bindings
-	{ key = "a", mods = "LEADER|CTRL", action = wezterm.action({ SendString = "\x01" }) },
+config.keys = { -- tmux bindings
+	{ key = "Enter", mods = "SHIFT", action = wezterm.action.SendKey({ key = "RightArrow" }) },
 	{
 		key = "-",
 		mods = "LEADER",
