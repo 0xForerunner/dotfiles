@@ -9,7 +9,7 @@ return {
     },
     cmd = "Neogit",
     keys = {
-      { "<Leader>gg", "<Cmd>Neogit kind=auto<CR>", desc = "Neogit status" },
+      { "<Leader>gg", "<Cmd>Neogit kind=vsplit<CR>", desc = "Neogit status" },
     },
     opts = {},
   },
