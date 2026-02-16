@@ -59,6 +59,10 @@ return {
       n = {
         -- second key is the lefthand side of the map
 
+        -- disable default lazygit mappings (using fugitive instead)
+        ["<Leader>gg"] = false,
+        ["<Leader>tl"] = false,
+
         -- navigate buffer tabs
         ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
         ["[b"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
