@@ -12,6 +12,7 @@ config.color_scheme = "Catppuccin Mocha"
 config.enable_tab_bar = false
 config.window_close_confirmation = "NeverPrompt"
 config.max_fps = 120
+config.audible_bell = "SystemBeep"
 config.animation_fps = 120
 
 config.leader = { key = "a", mods = "CTRL" }

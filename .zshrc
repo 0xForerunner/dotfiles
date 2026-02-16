@@ -136,7 +136,15 @@ export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agen
 # Zoxide
 if exists zoxide
 then
-    eval "$(zoxide init --cmd cd zsh)"
+    eval "$(zoxide init zsh)"
+    # Use a wrapper so cd still works in environments where __zoxide_z
+    # isn't available (e.g., Claude Code shell snapshots drop __ prefixed functions)
+    cd() {
+        __zoxide_z "$@" 2>/dev/null || builtin cd "$@"
+    }
+    cdi() {
+        __zoxide_zi "$@" 2>/dev/null || builtin cd "$@"
+    }
 fi
 
 # pnpm
