@@ -3,13 +3,6 @@ if [[ "$TERM_PROGRAM" == "vscode" ]]; then
     return 0
 fi
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # History
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000000
@@ -29,6 +22,52 @@ exists() {
         return 0
     fi
 }
+
+stow_drift_check() {
+    [[ -o interactive ]] || return 0
+    exists stow || return 0
+
+    local repo line
+    local -a repos drifted
+
+    repos=("$HOME/dotfiles" "$HOME/dotfile-secrets")
+
+    for repo in "${repos[@]}"; do
+        [[ -d "$repo/.git" ]] || continue
+
+        while IFS= read -r line; do
+            [[ -n "$line" ]] || continue
+            [[ "$line" == "WARNING: in simulation mode so not modifying filesystem." ]] && continue
+            drifted+=("${repo:t}: $line")
+        done < <(cd "$repo" && stow -nvt "$HOME" . 2>&1)
+    done
+
+    typeset -gi _stow_drift_count=${#drifted[@]}
+    typeset -ga _stow_drift_items
+    _stow_drift_items=("${drifted[@]}")
+}
+
+stow-drift() {
+    stow_drift_check
+
+    if (( ${_stow_drift_count:-0} == 0 )); then
+        echo "No stow drift detected."
+        return 0
+    fi
+
+    echo "stow drift detected; rerun \`stow .\` in ~/dotfiles and/or ~/dotfile-secrets"
+    printf '  %s\n' "${_stow_drift_items[@]}"
+    return 1
+}
+
+stow_drift_check
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 # store binaries on injective
 store() {
@@ -50,6 +89,40 @@ optimize() {
 
 download-audio() {
     yt-dlp -f Audio_Only --cookies-from-browser chrome $1
+}
+
+# mdiff
+#
+# Show the difference between an existing merge commit and the tree Git would
+# produce from a default automatic merge using:
+#   - the first parent of the merge commit as the target branch
+#   - the second parent of the merge commit as the merge-from branch
+#
+# Usage:
+#   mdiff [merge_commit]
+#
+# Defaults:
+#   merge_commit = HEAD
+mdiff() {
+  local merge="${1:-HEAD}"
+  local target
+  local merge_from
+  local auto_tree
+
+  if ! git rev-parse --verify "${merge}^2" >/dev/null 2>&1; then
+    echo "WARN: Commit is not a 2-parent merge: $merge" >&2
+    return 1
+  fi
+
+  target="$(git rev-parse --verify "${merge}^1" 2>/dev/null)" || return
+  merge_from="$(git rev-parse --verify "${merge}^2" 2>/dev/null)" || return
+
+  auto_tree=$(
+    git merge-tree --write-tree "$target" "$merge_from" |
+    head -n1
+  ) || return
+
+  git diff "$merge" "$auto_tree"
 }
 
 # Plugins
@@ -88,7 +161,44 @@ bindkey -M vicmd 'j' history-substring-search-down
 bindkey '^J' autosuggest-accept
 
 # Aliases
-# Commands
+
+alias gwta='git worktree add'       # Add a new worktree
+alias gwtl='git worktree list'      # List all worktrees
+alias gwtr='git worktree remove'    # Remove a worktree
+alias gwtp='git worktree prune'     # Clean up stale worktree references
+
+# Create a worktree for a branch in a sibling directory (../branch-name)
+gwt() {
+    git worktree add "../${1}" "$@"
+}
+
+# Create a worktree with a new branch based on the current HEAD
+gwtb() {
+    git worktree add -b "$1" "../${1}"
+}
+
+# cd into an existing worktree by branch name
+gwtcd() {
+    cd "$(git worktree list --porcelain | grep -B2 "branch.*${1}" | head -1 | sed 's/worktree //')"
+}
+
+gwt-clone() {
+    local repo="$1"
+    local dir="${2:-$(basename "$repo" .git)}"
+
+    git clone --bare "$repo" "$dir/.bare"
+    echo "gitdir: ./.bare" > "$dir/.git"
+
+    cd "$dir"
+    git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+    git fetch origin
+
+    local main_branch
+    main_branch=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+    git worktree add "$main_branch"
+    cd "$main_branch"
+}
+
 if exists eza
 then
     alias ll="eza -lh --icons --git -a"
@@ -121,9 +231,17 @@ alias signup-logs="kubectl --namespace signup-sequencer-orb-ethereum logs -f --t
 alias dev-eu-central-2='export AWS_PROFILE=tfh-crypto-dev-admin AWS_REGION=eu-central-2 && tfh eks login --cluster crypto-dev-eu-central-2 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
 alias stage-eu-central-2='export AWS_PROFILE=tfh-crypto-stage-cryptopoweruseraccess AWS_REGION=eu-central-2 && tfh eks login --cluster crypto-stage-eu-central-2 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
 alias prod-eu-central-2='export AWS_PROFILE=tfh-crypto-prod-cryptopoweruseraccess AWS_REGION=eu-central-2 && tfh eks login --cluster crypto-prod-eu-central-2 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
+
+alias dev-us-east-1='export AWS_PROFILE=tfh-crypto-dev-poweruseraccess AWS_REGION=us-east-1 && tfh eks login --cluster crypto-dev-us-east-1 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
 alias stage-us-east-1='export AWS_PROFILE=tfh-crypto-stage-cryptopoweruseraccess AWS_REGION=us-east-1 && tfh eks login --cluster crypto-v2-stage-us-east-1 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
 alias prod-us-east-1='export AWS_PROFILE=tfh-crypto-prod-cryptopoweruseraccess AWS_REGION=us-east-1 && tfh eks login --cluster crypto-v2-prod-us-east-1 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
-alias argo='kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}"| base64 -d | pbcopy && kubectl port-forward -n argocd service/argocd-server 8080:http && open http://localhost:8080'
+
+alias dev-ap-northeast-1='export AWS_PROFILE=tfh-crypto-dev-poweruseraccess AWS_REGION=ap-northeast-1 && tfh eks login --cluster crypto-dev-ap-northeast-1 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
+alias stage-ap-northeast-1='export AWS_PROFILE=tfh-crypto-stage-cryptopoweruseraccess AWS_REGION=ap-northeast-1 && tfh eks login --cluster crypto-stage-ap-northeast-1 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
+alias prod-ap-northeast-1='export AWS_PROFILE=tfh-crypto-prod-cryptopoweruseraccess AWS_REGION=ap-northeast-1 && tfh eks login --cluster crypto-prod-ap-northeast-1 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
+
+alias argo-ui='kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}"| base64 -d | pbcopy && kubectl port-forward -n argocd service/argocd-server 8080:http && open http://localhost:8080'
+alias argo-cli='export ARGOCD_OPTS="--port-forward-namespace argocd" && argocd login --port-forward --username admin --password $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)'
 
 export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 
@@ -193,5 +311,9 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 export PATH="${HOME}/.bb:${PATH}"
+
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd stow_drift_check
 export PATH="/Users/eric.woolsey/.bb:$PATH"
 export PATH="$PATH:/Users/eric.woolsey/.aztec/bin"
+source /Users/eric.woolsey/.config/op/plugins.sh

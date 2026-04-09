@@ -10,15 +10,16 @@
 	cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [merge]
 	tool = nvim
+	conflictstyle = zdiff3
 [mergetool "nvim"]
 	cmd = "nvim -f -c \"Gdiffsplit!\" \"$MERGED\""
 [mergetool]
 	prompt = false
+[rerere]
+	enabled = true
 [submodule]
 	recurse = true
 	fetchJobs = 10
-[url "git@github.com:"]
-	insteadOf = https://github.com/
 [alias]
 	open = "!f(){ open `git remote -v | awk '/fetch/{print $2}' | sed -Ee 's#(git@|git://)#http://#' -e 's@com:@com/@'`| head -n1; }; f"
 [init]
@@ -44,3 +45,15 @@
 	required = true
 [pull]
 	rebase = true
+[rebase]
+	autoStash = true
+[fetch]
+	prune = true
+[push]
+	autoSetupRemote = true
+[credential "https://github.com"]
+	helper = 
+	helper = !op plugin run -- gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !op plugin run -- gh auth git-credential

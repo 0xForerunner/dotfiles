@@ -47,6 +47,7 @@
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
     status                  # exit code of the last command
+    stow_drift              # stow drift warning
     command_execution_time  # duration of the last command
     background_jobs         # presence of background jobs
     direnv                  # direnv status (https://direnv.net/)
@@ -1678,6 +1679,11 @@
   # POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS. It displays an icon and orange text greeting the user.
   #
   # Type `p10k help segment` for documentation and a more sophisticated example.
+  function prompt_stow_drift() {
+    (( ${_stow_drift_count:-0} > 0 )) || return
+    p10k segment -s STOW_DRIFT -i '!' -t "stow ${_stow_drift_count}"
+  }
+
   function prompt_example() {
     p10k segment -f 208 -i '⭐' -t 'hello, %n'
   }
@@ -1704,6 +1710,8 @@
   # User-defined prompt segments can be customized the same way as built-in segments.
   # typeset -g POWERLEVEL9K_EXAMPLE_FOREGROUND=208
   # typeset -g POWERLEVEL9K_EXAMPLE_VISUAL_IDENTIFIER_EXPANSION='⭐'
+  typeset -g POWERLEVEL9K_STOW_DRIFT_FOREGROUND=232
+  typeset -g POWERLEVEL9K_STOW_DRIFT_BACKGROUND=226
 
   # Transient prompt works similarly to the builtin transient_rprompt option. It trims down prompt
   # when accepting a command line. Supported values:
