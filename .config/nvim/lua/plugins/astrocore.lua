@@ -45,6 +45,9 @@ return {
         signcolumn = "yes", -- sets vim.opt.signcolumn to yes
         wrap = false, -- sets vim.opt.wrap
         showtabline = 0, -- disable buffer tabs
+        foldcolumn = "0", -- disable AstroUI's automatic fold column
+        foldexpr = "0", -- avoid recalculating expression folds on every redraw
+        foldmethod = "manual", -- keep movement fast after AstroUI's default expr folding
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
@@ -111,8 +114,7 @@ return {
           function() return require("obsidian").util.gf_passthrough() end,
           desc = "Obsidian follow link",
         },
-        -- Not sure why this doesn't work...
-        -- ["<leader>o"] = { name = "Obsidian" },
+        ["<leader>o"] = { desc = "Obsidian" },
         ["<leader>oh"] = {
           function() return require("obsidian").util.toggle_checkbox() end,
           desc = "Obsidian toggle checkbox",

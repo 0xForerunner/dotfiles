@@ -13,5 +13,6 @@ vim.api.nvim_create_autocmd("FileType", {
 -- allows 'words' to contain dashes
 vim.opt.iskeyword:append "-"
 
--- disable default mappings
-vim.api.nvim_set_keymap("n", "<leader>o", "", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>fw", function() require("snacks").picker.grep { hidden = true, ignored = true } end, {
+  desc = "Find words in all files",
+})

@@ -125,16 +125,20 @@ mdiff() {
   git diff "$merge" "$auto_tree"
 }
 
+# Completion
+# fzf-tab wraps the standard completion widgets, so compinit must run first.
+# Keep completion styles ahead of compinit so they are picked up consistently.
+zstyle ':completion:*:git-checkout:*' sort false
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+autoload -Uz compinit
+compinit
+
 # Plugins
 if exists fzf
 then
     source ~/.zsh_plugins/fzf-tab/fzf-tab.plugin.zsh
-    # disable sort when completing `git checkout`
-    zstyle ':completion:*:git-checkout:*' sort false
-    # set descriptions format to enable group support
-    zstyle ':completion:*:descriptions' format '[%d]'
-    # set list-colors to enable filename colorizing
-    zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
     # preview directory's content with eza when completing cd
     zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
     # switch group using `,` and `.`
@@ -208,6 +212,12 @@ else
     alias ll='ls -lh'
 fi
 
+if exists fnm
+then
+    alias nvm='fnm'
+    eval "$(fnm env --use-on-cd --shell zsh)"
+fi
+
 alias n='nept'
 alias k='kubectl'
 
@@ -217,6 +227,7 @@ alias gcl='git clone --recurse-submodules -j8'
 alias gp='git push'
 alias gpl='git pull'
 alias gco='git checkout'
+alias gcn='git stash && git checkout main && git pull && git checkout -b'
 alias ga='git add'
 
 # Misc
@@ -231,6 +242,7 @@ alias signup-logs="kubectl --namespace signup-sequencer-orb-ethereum logs -f --t
 alias dev-eu-central-2='export AWS_PROFILE=tfh-crypto-dev-admin AWS_REGION=eu-central-2 && tfh eks login --cluster crypto-dev-eu-central-2 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
 alias stage-eu-central-2='export AWS_PROFILE=tfh-crypto-stage-cryptopoweruseraccess AWS_REGION=eu-central-2 && tfh eks login --cluster crypto-stage-eu-central-2 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
 alias prod-eu-central-2='export AWS_PROFILE=tfh-crypto-prod-cryptopoweruseraccess AWS_REGION=eu-central-2 && tfh eks login --cluster crypto-prod-eu-central-2 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
+alias admin-prod-eu-central-2='export AWS_PROFILE=tfh-crypto-prod-breakglassadministratoraccess AWS_REGION=eu-central-2 && tfh eks login --cluster crypto-prod-eu-central-2 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
 
 alias dev-us-east-1='export AWS_PROFILE=tfh-crypto-dev-poweruseraccess AWS_REGION=us-east-1 && tfh eks login --cluster crypto-dev-us-east-1 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
 alias stage-us-east-1='export AWS_PROFILE=tfh-crypto-stage-cryptopoweruseraccess AWS_REGION=us-east-1 && tfh eks login --cluster crypto-v2-stage-us-east-1 --profile $AWS_PROFILE --region $AWS_REGION && k9s -A'
@@ -277,43 +289,11 @@ eval "$(direnv hook zsh)"
 
 export NARGO_HOME="$HOME/.nargo"
 export PATH="$PATH:$NARGO_HOME/bin"
-
-lazy_load_nvm() {
-  unset -f node nvm
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-}
-
-node() {
-  lazy_load_nvm
-  node $@
-}
-
-nvm() {
-  lazy_load_nvm
-  node $@
-}
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/homebrew/Caskroom/miniconda/base/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
 export PATH="${HOME}/.bb:${PATH}"
 
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd stow_drift_check
 export PATH="/Users/eric.woolsey/.bb:$PATH"
 export PATH="$PATH:/Users/eric.woolsey/.aztec/bin"
-source /Users/eric.woolsey/.config/op/plugins.sh
+source ~/.venvs/default/bin/activate
+# source /Users/eric.woolsey/.config/op/plugins.sh
