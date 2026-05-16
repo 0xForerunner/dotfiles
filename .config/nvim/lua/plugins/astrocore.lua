@@ -45,9 +45,6 @@ return {
         signcolumn = "yes", -- sets vim.opt.signcolumn to yes
         wrap = false, -- sets vim.opt.wrap
         showtabline = 0, -- disable buffer tabs
-        foldcolumn = "0", -- disable AstroUI's automatic fold column
-        foldexpr = "0", -- avoid recalculating expression folds on every redraw
-        foldmethod = "manual", -- keep movement fast after AstroUI's default expr folding
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
@@ -61,7 +58,6 @@ return {
       -- first key is the mode
       n = {
         -- second key is the lefthand side of the map
-
         -- disable default lazygit mappings (using fugitive instead)
         ["<Leader>gg"] = false,
         ["<Leader>tl"] = false,
@@ -80,19 +76,6 @@ return {
           desc = "Close buffer from tabline",
         },
 
-        -- tables with just a `desc` key will be registered with which-key if it's installed
-        -- this is useful for naming menus
-        -- ["<Leader>b"] = { desc = "Buffers" },
-
-        -- setting a mapping to false will disable it
-        -- ["<C-S>"] = false,
-        --
-        -- CUSTOM
-        -- ["<leader>s"] = {
-        --   "<Cmd>vsplit<CR> <Cmd>split<CR> <Cmd>terminal<CR> <S-Down><S-Down><S-Down><S-Down>",
-        --   desc = "Open standard layout",
-        -- },
-        -- mappings seen under group name "Buffer"
         ["<S-Up>"] = { function() require("smart-splits").resize_up() end, desc = "Resize split up" },
         ["<S-Down>"] = { function() require("smart-splits").resize_down() end, desc = "Resize split down" },
         ["<S-Left>"] = { function() require("smart-splits").resize_left() end, desc = "Resize split left" },
@@ -151,6 +134,13 @@ return {
           "<Cmd>ObsidianYesterday<CR>",
           desc = "Open yesterday's note",
         },
+
+        -- tables with just a `desc` key will be registered with which-key if it's installed
+        -- this is useful for naming menus
+        -- ["<Leader>b"] = { desc = "Buffers" },
+
+        -- setting a mapping to false will disable it
+        -- ["<C-S>"] = false,
       },
     },
   },

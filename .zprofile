@@ -6,4 +6,4 @@ fi
 
 export PATH="$HOME/.elan/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.local/nvim-macos-arm64/bin:$PATH"
+# export PATH="$HOME/.local/nvim-macos-arm64/bin:$PATH"
