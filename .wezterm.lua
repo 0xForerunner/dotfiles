@@ -11,6 +11,7 @@ local config = wezterm.config_builder()
 config.color_scheme = "Catppuccin Mocha"
 config.enable_tab_bar = false
 config.window_close_confirmation = "NeverPrompt"
+config.term = "wezterm"
 config.max_fps = 120
 config.audible_bell = "SystemBeep"
 config.animation_fps = 120
