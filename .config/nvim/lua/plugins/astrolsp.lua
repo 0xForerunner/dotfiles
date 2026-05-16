@@ -3,6 +3,47 @@
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
 
+local function rust_analyzer_clients(bufnr)
+  local ok, rust_analyzer = pcall(require, "rustaceanvim.rust_analyzer")
+  if ok then return rust_analyzer.get_active_rustaceanvim_clients(bufnr) end
+
+  local clients = vim.lsp.get_clients { bufnr = bufnr, name = "rust-analyzer" }
+  if #clients == 0 then clients = vim.lsp.get_clients { bufnr = bufnr, name = "rust_analyzer" } end
+  return clients
+end
+
+local function toggle_rust_analyzer_check_command()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local clients = rust_analyzer_clients(bufnr)
+
+  if #clients == 0 then
+    vim.notify("No rust-analyzer client attached", vim.log.levels.WARN)
+    return
+  end
+
+  local settings = clients[1].settings or clients[1].config.settings or {}
+  local command = vim.tbl_get(settings, "rust-analyzer", "check", "command") or "check"
+  local next_command = command == "clippy" and "check" or "clippy"
+
+  local ok, rustacean_lsp = pcall(require, "rustaceanvim.lsp")
+  if ok and rustacean_lsp.set_config then
+    rustacean_lsp.set_config(bufnr, { check = { command = next_command } })
+  else
+    for _, client in ipairs(clients) do
+      local updated_settings = vim.tbl_deep_extend("force", client.settings or client.config.settings or {}, {
+        ["rust-analyzer"] = {
+          check = { command = next_command },
+        },
+      })
+      client.settings = updated_settings
+      client.config.settings = updated_settings
+      client:notify("workspace/didChangeConfiguration", { settings = updated_settings })
+    end
+  end
+
+  vim.notify(("rust-analyzer check command: cargo %s"):format(next_command))
+end
+
 ---@type LazySpec
 return {
   "AstroNvim/astrolsp",
@@ -196,6 +237,11 @@ return {
             }
           end,
           desc = "LSP workspace methods",
+        },
+        ["<Leader>lC"] = {
+          toggle_rust_analyzer_check_command,
+          desc = "Toggle cargo check/clippy",
+          cond = function(client) return client.name == "rust-analyzer" or client.name == "rust_analyzer" end,
         },
         ["<Leader>lt"] = {
           function()

@@ -229,6 +229,22 @@ alias gpl='git pull'
 alias gco='git checkout'
 alias gcn='git stash && git checkout main && git pull && git checkout -b'
 alias ga='git add'
+gpr() {
+    local branch="$1"
+    local message="$2"
+
+    if [[ -z "$branch" || -z "$message" ]]; then
+        echo "usage: prpush <branch-name> <commit-message>"
+        return 1
+    fi
+
+    git checkout -b "$branch" &&
+        git add . &&
+        git commit -m "$message" &&
+        git push -u origin "$branch" &&
+        gh pr create --title "$message" --body ""
+}
+
 
 # Misc
 alias vi='nvim'

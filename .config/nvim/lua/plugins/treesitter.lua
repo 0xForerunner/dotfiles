@@ -19,6 +19,7 @@ return {
         "markdown",
         "markdown_inline",
         "regex",
+        "rust",
         "starlark",
         "solidity",
         -- add more arguments for adding more treesitter parsers

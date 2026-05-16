@@ -4,7 +4,7 @@ return {
   {
     "dlyongemallo/diffview.nvim",
     event = "User AstroGitFile",
-    cmd = { "DiffviewOpen" },
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory" },
     opts = {
       enhanced_diff_hl = true,
       view = {
