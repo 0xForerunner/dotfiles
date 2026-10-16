@@ -1,0 +1,17 @@
+# Repository metadata and setup files.
+\.git
+\.gitignore
+\.gitmodules
+^/\.stowrc$
+^/README.*
+^/LICENSE.*
+^/COPYING
+^/Brewfile$
+^/bootstrap$
+# Editor backups and generated state.
+.+~
+\#.*\#
+\.\#.+
+.+\.bak
+.+\.log
+\.DS_Store

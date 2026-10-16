@@ -1,3 +1,5 @@
+local diff_context = 24
+
 ---@type LazySpec
 return {
   -- use mason-tool-installer for automatically installing Mason packages
@@ -5,6 +7,11 @@ return {
     "dlyongemallo/diffview.nvim",
     event = "User AstroGitFile",
     cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory" },
+    init = function()
+      local diffopt = vim.tbl_filter(function(value) return not value:match "^context:" end, vim.opt.diffopt:get())
+      table.insert(diffopt, ("context:%d"):format(diff_context))
+      vim.opt.diffopt = diffopt
+    end,
     opts = {
       enhanced_diff_hl = true,
       view = {

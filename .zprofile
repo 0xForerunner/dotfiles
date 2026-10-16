@@ -1,9 +1,16 @@
-if [[ $OSTYPE == darwin* ]]; then
-  defaults write -g InitialKeyRepeat -int 15 # normal minimum is 15 (225 ms)
-  defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+# Homebrew supports Apple Silicon, Intel Macs, and Linux.
+if (( $+commands[brew] )); then
+  eval "$(brew shellenv)"
+else
+  for brew_path in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew "$HOME/.linuxbrew/bin/brew"; do
+    if [[ -x "$brew_path" ]]; then
+      eval "$("$brew_path" shellenv)"
+      break
+    fi
+  done
+  unset brew_path
 fi
 
-export PATH="$HOME/.elan/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-# export PATH="$HOME/.local/nvim-macos-arm64/bin:$PATH"
+typeset -U path
+path=("$HOME/.local/bin" "$HOME/.elan/bin" $path)
+export PATH

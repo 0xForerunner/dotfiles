@@ -5,3 +5,6 @@
 .claude/projects
 .claude/memory
 .claude/tasks
+
+*.log
+*.bak

@@ -12,6 +12,7 @@ return {
         -- install language servers
         "lua-language-server",
         "rust-analyzer",
+        "nomicfoundation-solidity-language-server",
 
         -- install formatters
         "stylua",

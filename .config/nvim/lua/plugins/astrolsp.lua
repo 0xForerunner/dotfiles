@@ -65,6 +65,8 @@ return {
         },
         ignore_filetypes = { -- disable format on save for specified filetypes
           "markdown",
+          "c",
+          "cpp",
         },
       },
       disabled = { -- disable formatting capabilities for the listed language servers
@@ -83,6 +85,17 @@ return {
     -- customize language server configuration passed to `vim.lsp.config`
     -- client specific configuration can also go in `lsp/` in your configuration root (see `:h lsp-config`)
     config = {
+      clangd = {
+        cmd = {
+          "clangd",
+          "--query-driver="
+            .. vim.fn.expand "$HOME"
+            .. "/.platformio/packages/toolchain-gccarmnoneeabi/bin/arm-none-eabi-*",
+        },
+        capabilities = {
+          offsetEncoding = "utf-8",
+        },
+      },
       noir_ls = {
         cmd = { "nargo", "lsp" }, -- comes from the Noir toolchain
         filetypes = { "noir" },
@@ -276,8 +289,10 @@ return {
     -- A custom `on_attach` function to be run after the default `on_attach` function
     -- takes two parameters `client` and `bufnr`  (`:h lsp-attach`)
     on_attach = function(client, bufnr)
-      -- this would disable semanticTokensProvider for all clients
-      -- client.server_capabilities.semanticTokensProvider = nil
+      if client.name == "terraformls" then
+        -- terraform-ls can return pathological semantic token payloads in large Terraform repos.
+        client.server_capabilities.semanticTokensProvider = nil
+      end
     end,
   },
 }
