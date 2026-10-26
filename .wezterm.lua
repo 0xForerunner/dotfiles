@@ -11,7 +11,16 @@ local config = wezterm.config_builder()
 config.color_scheme = "Catppuccin Mocha"
 config.enable_tab_bar = false
 config.window_close_confirmation = "NeverPrompt"
-config.term = "wezterm"
+-- Only advertise TERM=wezterm if its terminfo is installed (otherwise rendering breaks).
+-- Install with: curl -fsSL https://raw.githubusercontent.com/wezterm/wezterm/main/termwiz/data/wezterm.terminfo | tic -x -o ~/.terminfo -
+for _, dir in ipairs({ os.getenv("HOME") .. "/.terminfo", "/usr/share/terminfo", "/opt/homebrew/share/terminfo" }) do
+	local f = io.open(dir .. "/77/wezterm", "r") or io.open(dir .. "/w/wezterm", "r")
+	if f then
+		f:close()
+		config.term = "wezterm"
+		break
+	end
+end
 config.max_fps = 120
 config.audible_bell = "SystemBeep"
 config.animation_fps = 120
