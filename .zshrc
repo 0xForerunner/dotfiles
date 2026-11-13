@@ -223,7 +223,7 @@ gwt-clone() {
     cd "$main_branch"
 }
 
-if exists eza
+if exists eza && [[ -z $CLAUDECODE ]]
 then
     alias ll="eza -lh --icons --git -a"
     alias lt="eza --tree --level=2 --long --icons --git"
@@ -323,14 +323,19 @@ fi
 if exists zoxide
 then
     eval "$(zoxide init zsh)"
-    # Use a wrapper so cd still works in environments where __zoxide_z
-    # isn't available (e.g., Claude Code shell snapshots drop __ prefixed functions)
-    cd() {
-        __zoxide_z "$@" 2>/dev/null || builtin cd "$@"
-    }
-    cdi() {
-        __zoxide_zi "$@" 2>/dev/null || builtin cd "$@"
-    }
+    # Skip the cd override for agents (CLAUDECODE): zoxide silently jumps elsewhere
+    # when a path does not exist, instead of failing.
+    if [[ -z $CLAUDECODE ]]
+    then
+        # Use a wrapper so cd still works in environments where __zoxide_z
+        # isn't available (e.g., Claude Code shell snapshots drop __ prefixed functions)
+        cd() {
+            __zoxide_z "$@" 2>/dev/null || builtin cd "$@"
+        }
+        cdi() {
+            __zoxide_zi "$@" 2>/dev/null || builtin cd "$@"
+        }
+    fi
 fi
 
 # pnpm
@@ -358,3 +363,5 @@ autoload -Uz add-zsh-hook
 add-zsh-hook precmd stow_drift_check
 export PATH="$PATH:$HOME/.aztec/bin"
 [[ ! -r "$HOME/.config/op/plugins.sh" ]] || source "$HOME/.config/op/plugins.sh"
+
+export PATH="$HOME/.okc/bin:$PATH"  # okc

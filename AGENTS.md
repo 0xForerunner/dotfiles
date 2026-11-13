@@ -61,3 +61,14 @@ person making this proof is the person covered by that payment."
 
 Avoid leading with: "The protocol does not specify the cryptographic
 binding needed to carry the registration check into the resulting proof."
+
+## Explain without shared context
+
+When I ask you to explain something, assume I have not seen your working context: earlier tool output, scratch files, or labels you used while reasoning.
+
+- Explain why things are the way they are, not only what they are. Include the reason behind a design choice, a constraint, or a behavior.
+- Prefer plain words that spell things out over jargon or compressed terms. A longer sentence that the reader can follow beats a short one they have to decode.
+- Name the things you're talking about. Use the actual identifier, and say what it is the first time it appears.
+- Say what changed, and from what to what. "Promoted" needs an object and a target.
+- Avoid "it", "this", and "the X" when the referent is unclear or more than a sentence back.
+- Spell out any shorthand you coined while working.
